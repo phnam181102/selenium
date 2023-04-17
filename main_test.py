@@ -366,3 +366,140 @@ class ShoppingCartModule(unittest.TestCase):
 
         result_image_path = os.path.join(folder_name, 'result.png')
         self.driver.save_screenshot(result_image_path)
+
+    def test_user_can_update_quantity_of_product_in_cart(self):
+        self.driver.get('https://demo-unsen.myshopify.com')
+        pw_input = self.driver.find_element("xpath", '//*[@id="password"]')
+        pw_input.send_keys('4')
+        enter_btn = self.driver.find_element("xpath", '/html/body/div[1]/div[2]/div[2]/form/button')
+        enter_btn.click()
+        self.driver.get('https://demo-unsen.myshopify.com/account/login')
+
+        # Enter email
+        email_element = self.driver.find_element("name", 'customer[email]')
+        email_element.send_keys('lji59738@nezid.com')
+
+        # create the folder for this test case's screenshots
+        test_case_name = self.id().split('.')[-1]
+        folder_name = os.path.join('result_images', self.__class__.__name__,test_case_name)
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        # Enter valid password
+        password_element = self.driver.find_element("name", 'customer[password]')
+        password_element.send_keys('abc.12345')
+
+        # Click on login button
+        login_btn_element = self.driver.find_element("xpath", '//*[@id="customer_login"]/div[3]/button')
+        login_btn_element.click()
+
+        self.driver.get('https://demo-unsen.myshopify.com/collections/women/products/polka-dot-tie-front-top')
+
+        add_to_cart_btn = self.driver.find_element(By.CLASS_NAME, "t4s-product-form__submit")
+        add_to_cart_btn.click()
+
+        time.sleep(3)
+
+        step1_path = os.path.join(folder_name, 'step1.png')
+        self.driver.save_screenshot(step1_path)
+
+        plus_btn = self.driver.find_element(By.XPATH, '//*[@id="t4s-tab-minicart"]/div[1]/div/div[2]/div/div/div[2]/div/div/button[2]')
+        plus_btn.click()
+
+        time.sleep(2)
+
+        result_image_path = os.path.join(folder_name, 'result.png')
+        self.driver.save_screenshot(result_image_path)
+
+        remove_btn = self.driver.find_element(By.CLASS_NAME, "t4s-mini_cart__remove")
+        remove_btn.click()
+
+    def test_user_can_remove_product_from_cart_successfully(self):
+        self.driver.get('https://demo-unsen.myshopify.com')
+        pw_input = self.driver.find_element("xpath", '//*[@id="password"]')
+        pw_input.send_keys('4')
+        enter_btn = self.driver.find_element("xpath", '/html/body/div[1]/div[2]/div[2]/form/button')
+        enter_btn.click()
+        self.driver.get('https://demo-unsen.myshopify.com/account/login')
+
+        # Enter email
+        email_element = self.driver.find_element("name", 'customer[email]')
+        email_element.send_keys('lji59738@nezid.com')
+
+        # create the folder for this test case's screenshots
+        test_case_name = self.id().split('.')[-1]
+        folder_name = os.path.join('result_images', self.__class__.__name__,test_case_name)
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        # Enter valid password
+        password_element = self.driver.find_element("name", 'customer[password]')
+        password_element.send_keys('abc.12345')
+
+        # Click on login button
+        login_btn_element = self.driver.find_element("xpath", '//*[@id="customer_login"]/div[3]/button')
+        login_btn_element.click()
+
+        self.driver.get('https://demo-unsen.myshopify.com/collections/women/products/polka-dot-tie-front-top')
+
+        add_to_cart_btn = self.driver.find_element(By.CLASS_NAME, "t4s-product-form__submit")
+        add_to_cart_btn.click()
+
+        time.sleep(3)
+
+        step1_path = os.path.join(folder_name, 'step1.png')
+        self.driver.save_screenshot(step1_path)
+
+        remove_btn = self.driver.find_element(By.CLASS_NAME, "t4s-mini_cart__remove")
+        remove_btn.click()
+
+        time.sleep(2)
+
+        result_image_path = os.path.join(folder_name, 'result.png')
+        self.driver.save_screenshot(result_image_path)
+
+    def test_user_cannot_add_product_with_negative_quantity(self):
+        self.driver.get('https://demo-unsen.myshopify.com')
+        pw_input = self.driver.find_element("xpath", '//*[@id="password"]')
+        pw_input.send_keys('4')
+        enter_btn = self.driver.find_element("xpath", '/html/body/div[1]/div[2]/div[2]/form/button')
+        enter_btn.click()
+        self.driver.get('https://demo-unsen.myshopify.com/account/login')
+
+        # Enter email
+        email_element = self.driver.find_element("name", 'customer[email]')
+        email_element.send_keys('lji59738@nezid.com')
+
+        # create the folder for this test case's screenshots
+        test_case_name = self.id().split('.')[-1]
+        folder_name = os.path.join('result_images', self.__class__.__name__, test_case_name)
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        # Enter valid password
+        password_element = self.driver.find_element("name", 'customer[password]')
+        password_element.send_keys('abc.12345')
+
+        # Click on login button
+        login_btn_element = self.driver.find_element("xpath", '//*[@id="customer_login"]/div[3]/button')
+        login_btn_element.click()
+
+        self.driver.get('https://demo-unsen.myshopify.com/collections/women/products/polka-dot-tie-front-top')
+
+        quantity_input_btn = self.driver.find_element(By.CLASS_NAME, "t4s-quantity-input")
+        quantity_input_btn.clear()
+        quantity_input_btn.send_keys('-5')
+
+        step1_path = os.path.join(folder_name, 'step1.png')
+        self.driver.save_screenshot(step1_path)
+
+        add_to_cart_btn = self.driver.find_element(By.CLASS_NAME, "t4s-product-form__submit")
+        add_to_cart_btn.click()
+
+        time.sleep(3)
+
+        result_image_path = os.path.join(folder_name, 'result.png')
+        self.driver.save_screenshot(result_image_path)
+
+        remove_btn = self.driver.find_element(By.CLASS_NAME, "t4s-mini_cart__remove")
+        remove_btn.click()
